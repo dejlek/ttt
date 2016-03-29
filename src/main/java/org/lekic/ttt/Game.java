@@ -1,6 +1,7 @@
 package org.lekic.ttt;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The "Game" class contains the game logic and the data.
@@ -49,25 +50,67 @@ public class Game {
         int pid = next(); // get ID of the player who should make move
         String move = "";
         if ("computer".equals(players[pid])) {
-            move = computerMove();
+            computerMove();
         } else {
-            move = humanMove();
+            humanMove();
         }
     }
     
+    public int getX(String argMove) {
+        return 0 + argMove.charAt(0) - 'A';
+    }
+    
+    public int getY(String argMove) {
+        return Integer.parseInt("" + argMove.charAt(1)) - 1;
+    }
+    
     public boolean isValid(String argMove) {
-        int x = 0 + argMove.charAt(0) - 'A';
-        int y = Integer.parseInt("" + argMove.charAt(1)) - 1;
+        int x = getX(argMove);
+        int y = getY(argMove);
  
         return (x < 3 && x >=0 && y < 3 && y >= 0);
     }
     
-    public String computerMove() { 
-        return "";
+    /**
+     * Makes a move.
+     * @param argMove 
+     */
+    public void move(String argMove) {
+        char what = nextPlayerID == 0 ? 'X' : 'O';
+        int x = getX(argMove);
+        int y = getY(argMove);
+        board[x][y] = what;
+        history.add(argMove);
     }
     
-    public String humanMove() { 
-        return "";
+    public void computerMove() { 
+        // if computer first, we start with "A1" move.
+        if (history.isEmpty()) {
+            move("A1");
+        }
+    }
+    
+    public void humanMove() { 
+        Scanner keyboard = new Scanner(System.in);
+        boolean done = false;
+        String move = "";
+        while (!done) {
+            System.out.println("Your move: ");
+            move = keyboard.next();
+            Game.checkQuit(move); // check whether we should exit prematurely
+
+            if (isValid(move)) {
+                done = true;
+                move(move);
+            }
+        } // while
+    }
+    
+    public static void checkQuit(String argInput) {
+        if ("quit".equals(argInput)) {
+            System.out.println("Exiting the tic-tac-toe game. Good bye!");
+            System.exit(0);
+        }
     }
     
 } // Game class
