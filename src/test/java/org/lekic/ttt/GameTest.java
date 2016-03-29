@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unittests for the Game class.
+ * Unit-tests for the Game class.
  * 
  * @author dejan
  */
@@ -39,6 +39,20 @@ public class GameTest {
         assertEquals(0, g.next());
         assertEquals(1, g.next());
         assertEquals(0, g.next());
+    }
+    
+    @Test
+    public void isValidReturnsTrue() {
+        Game g = new Game("human");
+        assertTrue(g.isValid("A1"));
+        assertTrue(g.isValid("A2"));
+        assertTrue(g.isValid("A3"));
+        assertTrue(g.isValid("B1"));
+        assertTrue(g.isValid("B2"));
+        assertTrue(g.isValid("B3"));
+        assertTrue(g.isValid("C1"));
+        assertTrue(g.isValid("C2"));
+        assertTrue(g.isValid("C3"));
     }
     
 } // GameTest class
