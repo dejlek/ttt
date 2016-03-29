@@ -44,6 +44,7 @@ public class GameTest {
     @Test
     public void isValidReturnsTrue() {
         Game g = new Game("human");
+        // initially all cells are empty, so isValid() should work...
         assertTrue(g.isValid("A1"));
         assertTrue(g.isValid("A2"));
         assertTrue(g.isValid("A3"));
